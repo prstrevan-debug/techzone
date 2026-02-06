@@ -1,0 +1,1919 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechZone - Toko Alat Komputer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* RESET & VARIABLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6b6b;
+            --secondary: #4a69bd;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --dark: #2d3436;
+            --light: #f8f9fa;
+            --gray: #636e72;
+            --light-gray: #dfe6e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* ===== NAVIGASI ANTAR HALAMAN ===== */
+        .page {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            padding-top: 80px;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ===== HEADER & NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #2d3436;
+            font-weight: 700;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .logo i {
+            color: #ff6b6b;
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 25px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #636e72;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 0;
+            position: relative;
+            transition: color 0.3s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-link:hover {
+            color: #ff6b6b;
+        }
+
+        .nav-link.active {
+            color: #ff6b6b;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ff6b6b;
+        }
+
+        /* Header Actions */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon i {
+            font-size: 22px;
+            color: #636e72;
+            transition: color 0.3s;
+        }
+
+        .cart-icon:hover i {
+            color: #ff6b6b;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wa-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s;
+            gap: 8px;
+        }
+
+        .wa-btn i {
+            font-size: 18px;
+        }
+
+        .wa-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-checkout {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s;
+            gap: 8px;
+        }
+
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Tombol Kembali ke Beranda */
+        .back-to-home {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+            gap: 8px;
+        }
+
+        .back-to-home:hover {
+            background: #ff5252;
+            transform: translateX(-3px);
+        }
+
+        /* ===== HALAMAN BERANDA ===== */
+        .hero {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .promo-banner {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 40px;
+            border-radius: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* ===== HALAMAN PRODUK ===== */
+        .products-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .products-header h1 {
+            font-size: 36px;
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .product-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-category {
+            display: inline-block;
+            padding: 5px 10px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2d3436;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff6b6b;
+        }
+
+        .old-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-checkout-small {
+            flex: 1;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            gap: 8px;
+        }
+
+        .btn-checkout-small:hover {
+            background: linear-gradient(135deg, #ff5252 0%, #ff7b39 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-cart {
+            background: #4a69bd;
+            color: white;
+            border: none;
+            width: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .btn-cart:hover {
+            background: #3c5aa8;
+            transform: translateY(-2px);
+        }
+
+        /* ===== HALAMAN KERANJANG ===== */
+        .cart-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cart-header h1 {
+            font-size: 36px;
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        .cart-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .empty-cart i {
+            font-size: 80px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-cart h3 {
+            font-size: 24px;
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        .empty-cart p {
+            color: #636e72;
+            margin-bottom: 30px;
+        }
+
+        /* Cart Items Container */
+        .cart-items-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item.deleting {
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+
+        .cart-item-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .cart-item-price {
+            color: #ff6b6b;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+
+        .quantity {
+            width: 40px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .remove-btn {
+            color: #ff6b6b;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Cart Summary */
+        .cart-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-row.total {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff6b6b;
+            border-bottom: none;
+            padding-top: 15px;
+            border-top: 2px solid #eee;
+        }
+
+        .cart-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .cart-actions .wa-btn {
+            flex: 1;
+            padding: 15px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .continue-shopping {
+            background: #f8f9fa;
+            color: #2d3436;
+            border: 2px solid #ddd;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s;
+            flex: 1;
+        }
+
+        .continue-shopping:hover {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+
+        /* ===== HALAMAN DATA PENGIRIMAN YANG DIPERBAIKI ===== */
+        .checkout-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .checkout-form {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .checkout-form h3 {
+            margin-bottom: 25px;
+            color: #2d3436;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ff6b6b;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2d3436;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        /* Shipping Options */
+        .shipping-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .shipping-option {
+            position: relative;
+        }
+
+        .shipping-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .shipping-option label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        .shipping-option label:hover {
+            border-color: #ff6b6b;
+            background: white;
+        }
+
+        .shipping-option input:checked + label {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .shipping-option i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #ff6b6b;
+        }
+
+        /* Payment Options */
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .payment-option {
+            position: relative;
+        }
+
+        .payment-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .payment-option label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        .payment-option label:hover {
+            border-color: #ff6b6b;
+            background: white;
+        }
+
+        .payment-option input:checked + label {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .payment-option i {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .payment-option.qris i {
+            color: #00b894;
+        }
+
+        .payment-option.cod i {
+            color: #ff6b6b;
+        }
+
+        .payment-option.bank i {
+            color: #4a69bd;
+        }
+
+        .cod-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Order Summary Sidebar */
+        .order-summary-sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .order-summary-sidebar h3 {
+            margin-bottom: 20px;
+            color: #2d3436;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ff6b6b;
+        }
+
+        .checkout-items {
+            margin-bottom: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .checkout-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checkout-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .checkout-item-name {
+            font-weight: 500;
+        }
+
+        .checkout-item-qty {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== NOTIFICATION ===== */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #00b894;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .cart-item-img {
+                width: 100%;
+                height: 150px;
+                margin-right: 0;
+            }
+
+            .cart-item-controls {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .cart-actions {
+                flex-direction: column;
+            }
+
+            .shipping-options,
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-actions {
+                flex-wrap: wrap;
+            }
+
+            .btn-checkout-small {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <div class="logo" onclick="showPage('home')">
+                <i class="fas fa-laptop"></i>
+                TechZone
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <div class="nav-link active" onclick="showPage('home')">
+                        <i class="fas fa-home"></i> Beranda
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link" onclick="showPage('headset')">
+                        <i class="fas fa-headphones"></i> Headset
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link" onclick="showPage('keyboard')">
+                        <i class="fas fa-keyboard"></i> Keyboard
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link" onclick="showPage('stand')">
+                        <i class="fas fa-laptop"></i> Stand Laptop
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="nav-link" onclick="showPage('cart')">
+                        <i class="fas fa-shopping-cart"></i> Keranjang
+                        <span class="cart-count" id="nav-cart-count">0</span>
+                    </div>
+                </li>
+            </ul>
+            
+            <div class="header-actions">
+                <!-- Icon Keranjang -->
+                <div class="cart-icon" onclick="showPage('cart')">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </div>
+                
+                <button class="wa-btn" onclick="window.open('https://wa.me/6285839796743?text=Halo%20TechZone,%20saya%20mau%20tanya%20produk', '_blank')">
+                    <i class="fab fa-whatsapp"></i>
+                    Tanya Produk
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- =================== HALAMAN BERANDA =================== -->
+    <section id="home-page" class="page active">
+        <div class="hero">
+            <h1>Toko Alat Komputer Terlengkap</h1>
+            <p>Dapatkan headset gaming, keyboard mechanical, stand laptop, dan berbagai aksesoris komputer berkualitas dengan harga terbaik</p>
+            <button class="btn-checkout" onclick="showPage('cart')">
+                <i class="fas fa-shopping-cart"></i> Lihat Keranjang
+            </button>
+        </div>
+
+        <div class="promo-banner">
+            🎉 DISKON HINGGA 50% + GRATIS ONGKIR MINIMAL BELANJA Rp 300.000 🎉
+        </div>
+
+        <!-- Produk Unggulan di Beranda -->
+        <div class="container">
+            <div class="products-header">
+                <h1>Produk Unggulan</h1>
+                <p>Pilihan produk terbaik kami</p>
+            </div>
+
+            <div class="products-grid">
+                <!-- Produk 1 -->
+                <div class="product-card">
+                    <div class="product-badge">-28%</div>
+                    <img src="https://images.unsplash.com/photo-1585298723688-9d5d277e3d6a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Headset Gaming</span>
+                        <h3 class="product-name">Headset Gaming RGB Pro</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 289.000</span>
+                            <span class="old-price">Rp 399.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(1, 'Headset Gaming RGB Pro', 289000, 'https://images.unsplash.com/photo-1585298723688-9d5d277e3d6a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 2 -->
+                <div class="product-card">
+                    <div class="product-badge">-25%</div>
+                    <img src="https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Keyboard Mechanical</span>
+                        <h3 class="product-name">Keyboard Mechanical RGB</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 449.000</span>
+                            <span class="old-price">Rp 599.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(2, 'Keyboard Mechanical RGB', 449000, 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 3 -->
+                <div class="product-card">
+                    <div class="product-badge">-27%</div>
+                    <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Stand Laptop</span>
+                        <h3 class="product-name">Stand Laptop Adjustable</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 159.000</span>
+                            <span class="old-price">Rp 219.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(3, 'Stand Laptop Adjustable', 159000, 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Produk 4 -->
+                <div class="product-card">
+                    <div class="product-badge">-25%</div>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Headset Bluetooth</span>
+                        <h3 class="product-name">Headset Bluetooth Wireless</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 149.000</span>
+                            <span class="old-price">Rp 199.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(4, 'Headset Bluetooth Wireless', 149000, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =================== HALAMAN HEADSET =================== -->
+    <section id="headset-page" class="page">
+        <div class="container">
+            <!-- TOMBOL KEMBALI KE BERANDA -->
+            <button class="back-to-home" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i> Kembali ke Beranda
+            </button>
+
+            <div class="products-header">
+                <h1>Koleksi Headset</h1>
+                <p>Headset Gaming & Regular dengan kualitas terbaik</p>
+            </div>
+
+            <div class="products-grid">
+                <!-- Headset 1 -->
+                <div class="product-card">
+                    <div class="product-badge">-28%</div>
+                    <img src="https://images.unsplash.com/photo-1585298723688-9d5d277e3d6a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Headset Gaming</span>
+                        <h3 class="product-name">Headset Gaming RGB Pro</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 289.000</span>
+                            <span class="old-price">Rp 399.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(1, 'Headset Gaming RGB Pro', 289000, 'https://images.unsplash.com/photo-1585298723688-9d5d277e3d6a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Headset 2 -->
+                <div class="product-card">
+                    <div class="product-badge">-25%</div>
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Headset Bluetooth</span>
+                        <h3 class="product-name">Headset Bluetooth Wireless</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 149.000</span>
+                            <span class="old-price">Rp 199.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(4, 'Headset Bluetooth Wireless', 149000, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Headset 3 -->
+                <div class="product-card">
+                    <div class="product-badge">-21%</div>
+                    <img src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Headset Gaming Pro</span>
+                        <h3 class="product-name">Headset Gaming Wireless Pro</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 549.000</span>
+                            <span class="old-price">Rp 699.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(5, 'Headset Gaming Wireless Pro', 549000, 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =================== HALAMAN KEYBOARD =================== -->
+    <section id="keyboard-page" class="page">
+        <div class="container">
+            <!-- TOMBOL KEMBALI KE BERANDA -->
+            <button class="back-to-home" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i> Kembali ke Beranda
+            </button>
+
+            <div class="products-header">
+                <h1>Koleksi Keyboard</h1>
+                <p>Keyboard Mechanical & Membrane untuk semua kebutuhan</p>
+            </div>
+
+            <div class="products-grid">
+                <!-- Keyboard 1 -->
+                <div class="product-card">
+                    <div class="product-badge">-25%</div>
+                    <img src="https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Keyboard Mechanical</span>
+                        <h3 class="product-name">Keyboard Mechanical RGB</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 449.000</span>
+                            <span class="old-price">Rp 599.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(2, 'Keyboard Mechanical RGB', 449000, 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keyboard 2 -->
+                <div class="product-card">
+                    <div class="product-badge">-28%</div>
+                    <img src="https://images.unsplash.com/photo-1601445638532-3c6f6c3aa1d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Keyboard Gaming</span>
+                        <h3 class="product-name">Keyboard Gaming Membrane</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 129.000</span>
+                            <span class="old-price">Rp 179.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(6, 'Keyboard Gaming Membrane', 129000, 'https://images.unsplash.com/photo-1601445638532-3c6f6c3aa1d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keyboard 3 -->
+                <div class="product-card">
+                    <div class="product-badge">-20%</div>
+                    <img src="https://images.unsplash.com/photo-1598301257982-0cf014dabbcd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Keyboard Compact</span>
+                        <h3 class="product-name">Keyboard Mechanical 60%</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 599.000</span>
+                            <span class="old-price">Rp 749.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(7, 'Keyboard Mechanical 60%', 599000, 'https://images.unsplash.com/photo-1598301257982-0cf014dabbcd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =================== HALAMAN STAND LAPTOP =================== -->
+    <section id="stand-page" class="page">
+        <div class="container">
+            <!-- TOMBOL KEMBALI KE BERANDA -->
+            <button class="back-to-home" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i> Kembali ke Beranda
+            </button>
+
+            <div class="products-header">
+                <h1>Stand Laptop</h1>
+                <p>Stand laptop adjustable dan portable untuk kenyamanan kerja</p>
+            </div>
+
+            <div class="products-grid">
+                <!-- Stand 1 -->
+                <div class="product-card">
+                    <div class="product-badge">-27%</div>
+                    <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Stand Adjustable</span>
+                        <h3 class="product-name">Stand Laptop Adjustable</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 159.000</span>
+                            <span class="old-price">Rp 219.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(3, 'Stand Laptop Adjustable', 159000, 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stand 2 -->
+                <div class="product-card">
+                    <div class="product-badge">-31%</div>
+                    <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" class="product-img">
+                    <div class="product-info">
+                        <span class="product-category">Stand Portable</span>
+                        <h3 class="product-name">Stand Laptop Portable</h3>
+                        <div class="product-price">
+                            <span class="price">Rp 89.000</span>
+                            <span class="old-price">Rp 129.000</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-checkout-small" onclick="addToCart(8, 'Stand Laptop Portable', 89000, 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')">
+                                <i class="fas fa-cart-plus"></i> Tambah ke Keranjang
+                            </button>
+                            <button class="btn-cart" onclick="showPage('cart')">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =================== HALAMAN KERANJANG ======
+    </section>
+
+    <!-- =================== HALAMAN DATA PENGIRIMAN YANG DIPERBAIKI =================== -->
+    <section id="checkout-page" class="page">
+        <div class="container">
+            <!-- TOMBOL KEMBALI KE KERANJANG -->
+            <button class="back-to-home" onclick="showPage('cart')">
+                <i class="fas fa-arrow-left"></i> Kembali ke Keranjang
+            </button>
+
+            <div class="cart-header">
+                <h1>Data Pengiriman & Pembayaran</h1>
+                <p>Lengkapi data Anda untuk proses pengiriman</p>
+            </div>
+
+            <div class="checkout-container">
+                <div class="checkout-grid">
+                    <!-- Form Data Pengiriman -->
+                    <div class="checkout-form">
+                        <h3>Informasi Pengiriman</h3>
+                        
+                        <div class="form-group">
+                            <label>Nama Lengkap *</label>
+                            <input type="text" class="form-control" id="nama" placeholder="Masukkan nama lengkap" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Nomor WhatsApp *</label>
+                            <input type="tel" class="form-control" id="whatsapp" placeholder="Contoh: 081234567890" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Alamat Lengkap *</label>
+                            <textarea class="form-control" id="alamat" rows="4" placeholder="Masukkan alamat lengkap termasuk RT/RW, Kecamatan, Kabupaten/Kota" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Kota / Kabupaten</label>
+                            <input type="text" class="form-control" id="kota" placeholder="Masukkan kota/kabupaten">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Kode Pos</label>
+                            <input type="text" class="form-control" id="kodepos" placeholder="Masukkan kode pos">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Kurir Pengiriman *</label>
+                            <div class="shipping-options">
+                                <div class="shipping-option">
+                                    <input type="radio" name="kurir" id="jne" value="JNE" checked>
+                                    <label for="jne">
+                                        <i class="fas fa-truck"></i>
+                                        <span>JNE</span>
+                                        <small>Rp 15.000</small>
+                                    </label>
+                                </div>
+                                <div class="shipping-option">
+                                    <input type="radio" name="kurir" id="jnt" value="J&T">
+                                    <label for="jnt">
+                                        <i class="fas fa-shipping-fast"></i>
+                                        <span>J&T</span>
+                                        <small>Rp 12.000</small>
+                                    </label>
+                                </div>
+                                <div class="shipping-option">
+                                    <input type="radio" name="kurir" id="pos" value="POS">
+                                    <label for="pos">
+                                        <i class="fas fa-mail-bulk"></i>
+                                        <span>Pos Indonesia</span>
+                                        <small>Rp 10.000</small>
+                                    </label>
+                                </div>
+                                <div class="shipping-option">
+                                    <input type="radio" name="kurir" id="grab" value="GrabExpress">
+                                    <label for="grab">
+                                        <i class="fas fa-motorcycle"></i>
+                                        <span>GrabExpress</span>
+                                        <small>Rp 20.000</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Metode Pembayaran *</label>
+                            <div class="payment-options">
+                                <div class="payment-option qris">
+                                    <input type="radio" name="payment" id="qris" value="QRIS" checked>
+                                    <label for="qris">
+                                        <i class="fas fa-qrcode"></i>
+                                        <span>QRIS</span>
+                                        <small>Instant</small>
+                                    </label>
+                                </div>
+                                <div class="payment-option cod">
+                                    <input type="radio" name="payment" id="cod" value="COD">
+                                    <label for="cod">
+                                        <i class="fas fa-money-bill-wave"></i>
+                                        <span>COD</span>
+                                        <small class="cod-note">(Bekasi & Jakarta)</small>
+                                    </label>
+                                </div>
+                                <div class="payment-option bank">
+                                    <input type="radio" name="payment" id="bank" value="Transfer Bank">
+                                    <label for="bank">
+                                        <i class="fas fa-university"></i>
+                                        <span>Transfer Bank</span>
+                                        <small>BCA/BRI/Mandiri</small>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Catatan (Opsional)</label>
+                            <textarea class="form-control" id="catatan" rows="3" placeholder="Catatan tambahan untuk penjual"></textarea>
+                        </div>
+                        
+                        <button class="wa-btn" onclick="processCheckout()" style="width: 100%; padding: 15px; font-size: 18px; margin-top: 10px;">
+                            <i class="fab fa-whatsapp"></i> Konfirmasi Order via WhatsApp
+                        </button>
+                    </div>
+                    
+                    <!-- Ringkasan Pesanan Sidebar -->
+                    <div class="order-summary-sidebar">
+                        <h3>Ringkasan Pesanan</h3>
+                        
+                        <div class="checkout-items" id="checkout-items">
+                            <!-- Item checkout akan ditampilkan di sini -->
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="checkout-subtotal">Rp 0</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Ongkos Kirim</span>
+                            <span id="checkout-shipping">Rp 0</span>
+                        </div>
+                        
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="checkout-total">Rp 0</span>
+                        </div>
+                        
+                        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <p style="font-size: 14px; color: #666; margin-bottom: 5px;">📦 Estimasi Pengiriman: 2-5 hari</p>
+                            <p style="font-size: 14px; color: #666;">💳 Pembayaran aman & terpercaya</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HALAMAN KERANJANG -->
+    <section id="cart-page" class="page">
+        <div class="container">
+            <!-- TOMBOL KEMBALI KE BERANDA -->
+            <button class="back-to-home" onclick="showPage('home')">
+                <i class="fas fa-arrow-left"></i> Kembali ke Beranda
+            </button>
+
+            <div class="cart-header">
+                <h1>Keranjang Belanja</h1>
+                <p>Produk yang akan Anda beli</p>
+            </div>
+
+            <div class="cart-container">
+                <div id="cart-items-container">
+                    <!-- Isi keranjang akan ditampilkan di sini -->
+                    <div class="empty-cart" id="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Keranjang Kosong</h3>
+                        <p>Belum ada produk di keranjang belanja Anda</p>
+                        <button class="btn-checkout" style="margin-top: 20px; padding: 12px 30px;" onclick="showPage('home')">
+                            <i class="fas fa-shopping-bag"></i> Mulai Belanja
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cart Summary (akan ditampilkan jika ada item) -->
+                <div id="cart-summary-container" style="display: none;">
+                    <!-- Order Summary -->
+                    <div class="cart-summary">
+                        <h3 style="margin-bottom: 20px; color: #2d3436;">Ringkasan Pesanan</h3>
+                        
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal">Rp 0</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Ongkos Kirim</span>
+                            <span id="cart-shipping">Rp 15.000</span>
+                        </div>
+                        
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="cart-total">Rp 0</span>
+                        </div>
+                        
+                        <!-- Cart Actions -->
+                        <div class="cart-actions">
+                            <button class="continue-shopping" onclick="showPage('home')">
+                                <i class="fas fa-plus"></i> Tambah Produk Lain
+                            </button>
+                            <button class="wa-btn" onclick="showPage('checkout')">
+                                <i class="fas fa-arrow-right"></i> Lanjut ke Checkout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Data Produk
+        const products = [
+            { id: 1, name: "Headset Gaming RGB Pro", price: 289000, image: "https://images.unsplash.com/photo-1585298723688-9d5d277e3d6a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { id: 2, name: "Keyboard Mechanical RGB", price: 449000, image: "https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { id: 3, name: "Stand Laptop Adjustable", price: 159000, image: "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { id: 4, name: "Headset Bluetooth Wireless", price: 149000, image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { id: 5, name: "Headset Gaming Wireless Pro", price: 549000, image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { id: 6, name: "Keyboard Gaming Membrane", price: 129000, image: "https://images.unsplash.com/photo-1601445638532-3c6f6c3aa1d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { id: 7, name: "Keyboard Mechanical 60%", price: 599000, image: "https://images.unsplash.com/photo-1598301257982-0cf014dabbcd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" },
+            { id: 8, name: "Stand Laptop Portable", price: 89000, image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" }
+        ];
+
+        // Keranjang Belanja
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Format Rupiah
+        function formatRupiah(amount) {
+            return 'Rp ' + amount.toLocaleString('id-ID');
+        }
+
+        // Fungsi untuk ganti halaman
+        function showPage(pageId) {
+            // Sembunyikan semua halaman
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Tampilkan halaman yang dipilih
+            document.getElementById(pageId + '-page').classList.add('active');
+            
+            // Update menu aktif
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick') === `showPage('${pageId}')`) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Update data berdasarkan halaman
+            if (pageId === 'cart') {
+                updateCartDisplay();
+            } else if (pageId === 'checkout') {
+                updateCheckoutDisplay();
+            }
+            
+            // Scroll ke atas
+            window.scrollTo(0, 0);
+        }
+
+        // Update cart
+        function updateCart() {
+            // Simpan ke localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update jumlah di icon keranjang
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('nav-cart-count').textContent = totalItems;
+        }
+
+        // Update tampilan keranjang
+        function updateCartDisplay() {
+            const container = document.getElementById('cart-items-container');
+            const summaryContainer = document.getElementById('cart-summary-container');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart" id="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Keranjang Kosong</h3>
+                        <p>Belum ada produk di keranjang belanja Anda</p>
+                        <button class="btn-checkout" style="margin-top: 20px; padding: 12px 30px;" onclick="showPage('home')">
+                            <i class="fas fa-shopping-bag"></i> Mulai Belanja
+                        </button>
+                    </div>
+                `;
+                summaryContainer.style.display = 'none';
+                return;
+            }
+            
+            // Kosongkan container
+            container.innerHTML = '<div class="cart-items-container"></div>';
+            const itemsContainer = container.querySelector('.cart-items-container');
+            
+            // Buat item keranjang
+            let html = '';
+            let subtotal = 0;
+            
+            cart.forEach((item, index) => {
+                const itemSubtotal = item.price * item.quantity;
+                subtotal += itemSubtotal;
+                
+                html += `
+                    <div class="cart-item" id="cart-item-${index}">
+                        <img src="${item.image}" class="cart-item-img">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">${formatRupiah(item.price)}</div>
+                        </div>
+                        <div class="cart-item-controls">
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                                <span class="quantity">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            itemsContainer.innerHTML = html;
+            summaryContainer.style.display = 'block';
+            
+            // Update summary
+            updateCartSummary(subtotal);
+            updateCart();
+        }
+
+        // Update cart summary
+        function updateCartSummary(subtotal) {
+            const shipping = 15000;
+            const total = subtotal + shipping;
+            
+            document.getElementById('cart-subtotal').textContent = formatRupiah(subtotal);
+            document.getElementById('cart-shipping').textContent = formatRupiah(shipping);
+            document.getElementById('cart-total').textContent = formatRupiah(total);
+        }
+
+        // Tambah ke keranjang
+        function addToCart(id, name, price, image) {
+            // Cek apakah produk sudah ada di keranjang
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: id,
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            showNotification(`${name} berhasil ditambahkan ke keranjang!`);
+        }
+
+        // Update quantity
+        function updateQuantity(index, change) {
+            cart[index].quantity += change;
+            
+            if (cart[index].quantity < 1) {
+                cart[index].quantity = 1;
+            }
+            
+            updateCartDisplay();
+        }
+
+        // Hapus dari keranjang
+        function removeFromCart(index) {
+            if (confirm('Yakin hapus produk ini dari keranjang?')) {
+                const itemElement = document.getElementById(`cart-item-${index}`);
+                if (itemElement) {
+                    itemElement.classList.add('deleting');
+                    
+                    setTimeout(() => {
+                        cart.splice(index, 1);
+                        
+                        if (cart.length === 0) {
+                            updateCartDisplay();
+                        } else {
+                            updateCartDisplay();
+                        }
+                        
+                        showNotification('Produk dihapus dari keranjang');
+                    }, 300);
+                }
+            }
+        }
+
+        // Update checkout display
+        function updateCheckoutDisplay() {
+            if (cart.length === 0) {
+                showNotification('Keranjang masih kosong!');
+                showPage('cart');
+                return;
+            }
+            
+            // Update items list
+            const itemsContainer = document.getElementById('checkout-items');
+            let html = '';
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                html += `
+                    <div class="checkout-item">
+                        <div>
+                            <div class="checkout-item-name">${item.name}</div>
+                            <div class="checkout-item-qty">${item.quantity} x ${formatRupiah(item.price)}</div>
+                        </div>
+                        <div>${formatRupiah(itemTotal)}</div>
+                    </div>
+                `;
+            });
+            
+            itemsContainer.innerHTML = html;
+            
+            // Update shipping cost based on selected option
+            const shippingInput = document.querySelector('input[name="kurir"]:checked');
+            let shipping = 15000; // default
+            
+            if (shippingInput) {
+                switch(shippingInput.id) {
+                    case 'jne': shipping = 15000; break;
+                    case 'jnt': shipping = 12000; break;
+                    case 'pos': shipping = 10000; break;
+                    case 'grab': shipping = 20000; break;
+                }
+            }
+            
+            const total = subtotal + shipping;
+            
+            document.getElementById('checkout-subtotal').textContent = formatRupiah(subtotal);
+            document.getElementById('checkout-shipping').textContent = formatRupiah(shipping);
+            document.getElementById('checkout-total').textContent = formatRupiah(total);
+            
+            // Add event listeners for shipping options
+            document.querySelectorAll('input[name="kurir"]').forEach(input => {
+                input.addEventListener('change', updateCheckoutDisplay);
+            });
+        }
+
+        // Process checkout
+        function processCheckout() {
+            // Validasi form
+            const nama = document.getElementById('nama').value.trim();
+            const whatsapp = document.getElementById('whatsapp').value.trim();
+            const alamat = document.getElementById('alamat').value.trim();
+            
+            if (!nama || !whatsapp || !alamat) {
+                showNotification('Harap lengkapi semua data pengiriman yang wajib!', 'error');
+                return;
+            }
+            
+            if (cart.length === 0) {
+                showNotification('Keranjang masih kosong!', 'error');
+                return;
+            }
+            
+            // Get form values
+            const kota = document.getElementById('kota').value.trim();
+            const kodepos = document.getElementById('kodepos').value.trim();
+            const catatan = document.getElementById('catatan').value.trim();
+            
+            const shippingInput = document.querySelector('input[name="kurir"]:checked');
+            const paymentInput = document.querySelector('input[name="payment"]:checked');
+            
+            const kurir = shippingInput ? shippingInput.value : 'JNE';
+            const paymentMethod = paymentInput ? paymentInput.value : 'QRIS';
+            
+            // Calculate shipping cost
+            let shipping = 15000;
+            if (shippingInput) {
+                switch(shippingInput.id) {
+                    case 'jne': shipping = 15000; break;
+                    case 'jnt': shipping = 12000; break;
+                    case 'pos': shipping = 10000; break;
+                    case 'grab': shipping = 20000; break;
+                }
+            }
+            
+            // Buat pesan untuk WhatsApp
+            let message = "📋 *ORDER BARU - TECHZONE STORE*\n\n";
+            
+            message += "👤 *DATA PEMESAN:*\n";
+            message += `• Nama: ${nama}\n`;
+            message += `• WhatsApp: ${whatsapp}\n`;
+            message += `• Alamat: ${alamat}\n`;
+            if (kota) message += `• Kota/Kab: ${kota}\n`;
+            if (kodepos) message += `• Kode Pos: ${kodepos}\n\n`;
+            
+            message += "🛒 *DETAIL PESANAN:*\n";
+            let subtotal = 0;
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                message += `• ${item.name} (x${item.quantity}): ${formatRupiah(itemTotal)}\n`;
+            });
+            
+            const total = subtotal + shipping;
+            
+            message += `\n💰 *RINCIAN PEMBAYARAN:*\n`;
+            message += `Subtotal: ${formatRupiah(subtotal)}\n`;
+            message += `Ongkir (${kurir}): ${formatRupiah(shipping)}\n`;
+            message += `────────────────────\n`;
+            message += `*TOTAL: ${formatRupiah(total)}*\n\n`;
+            
+            message += `🚚 *PENGIRIMAN:*\n`;
+            message += `Kurir: ${kurir}\n`;
+            message += `Metode Bayar: ${paymentMethod}\n\n`;
+            
+            if (catatan) {
+                message += `📝 *CATATAN:*\n${catatan}\n\n`;
+            }
+            
+            message += `Mohon konfirmasi ketersediaan stok dan lanjutkan pembayaran. Terima kasih!`;
+            
+            // Buka WhatsApp
+            window.open(`https://wa.me/6285839796743?text=${encodeURIComponent(message)}`, '_blank');
+            
+            // Clear cart after checkout
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+            
+            // Show success notification
+            showNotification('Order berhasil dikirim! Silakan lanjutkan pembayaran di WhatsApp.', 'success');
+            
+            // Redirect to home after 2 seconds
+            setTimeout(() => {
+                showPage('home');
+            }, 2000);
+        }
+
+        // Notifikasi
+        function showNotification(message, type = 'success') {
+            // Hapus notifikasi sebelumnya
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Buat notifikasi baru
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.background = type === 'error' ? '#ff6b6b' : '#00b894';
+            
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Hapus setelah 3 detik
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+            updateCart(); // Update cart count saat load
+        });
+    </script>
+</body>
+</html>
